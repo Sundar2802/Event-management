@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Paper,
+  Box,
+} from "@mui/material";
+import backgroundImage from "E:\\pexels-monstera-production-5709009.jpg";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,14 +25,14 @@ const RegistrationForm = () => {
       ...formData,
       [name]: value,
     });
-
-    // Check password constraints
-    if (name === 'password') {
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (name === "password") {
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8}$/;
       if (!passwordRegex.test(value)) {
-        setPasswordError('Password must be at least 8 characters long and contain at least one letter and one number.');
+        setPasswordError(
+          "Password must be at least 8 characters long and contain at least one letter and one number."
+        );
       } else {
-        setPasswordError('');
+        setPasswordError("");
       }
     }
   };
@@ -36,71 +45,100 @@ const RegistrationForm = () => {
       return;
     }
 
-    // Add your registration logic here, e.g., send data to the server
-    console.log('Form submitted with data:', formData);
+    console.log("Form submitted with data:", formData);
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f4f4' }}>
-      <header style={{ marginBottom: '20px', textAlign: 'center', color: '#333', backgroundColor: '#61dafb', padding: '10px', borderRadius: '4px', width: '100%' }}>
-        <h1 style={{ margin: 0 }}>Registration App</h1>
-      </header>
-
-      <form onSubmit={handleSubmit} style={{ width: '300px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', backgroundColor: 'white' }}>
-        <label style={{ marginBottom: '10px', display: 'block' }}>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </label>
-
-        <label style={{ marginBottom: '10px', display: 'block' }}>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </label>
-
-        <label style={{ marginBottom: '10px', display: 'block' }}>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-          {passwordError && <p style={{ color: 'red', fontSize: '12px', marginBottom: '10px' }}>{passwordError}</p>}
-        </label>
-
-        <label style={{ marginBottom: '10px', display: 'block' }}>
-          Confirm Password:
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </label>
-
-        <button type="submit" disabled={passwordError} style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px', border: 'none', cursor: 'pointer', width: '100%' }}>
-          Register
-        </button>
-      </form>
-
-      <footer style={{ marginTop: '20px', textAlign: 'center', color: '#777', width: '100%' }}>
-        <p>&copy; 2023 Registration App</p>
-      </footer>
-    </div>
+    <Box
+      sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <Paper
+          elevation={3}
+          style={{
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h5"
+            style={{ marginBottom: "20px" }}
+          >
+            Registration Form
+          </Typography>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <TextField
+              label="Username"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              autoFocus
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            <TextField
+              label="Email"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              error={!!passwordError}
+              helperText={passwordError}
+            />
+            <TextField
+              label="Confirm Password"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              style={{ marginTop: "20px" }}
+              disabled={passwordError}
+            >
+              Register
+            </Button>
+          </form>
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 
